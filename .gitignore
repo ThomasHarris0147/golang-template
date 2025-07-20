@@ -1,3 +1,5 @@
 api
 tmp
 .env
+.DS_Store
+.idea/

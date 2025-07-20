@@ -4,6 +4,9 @@ Copyright © 2025 NAME HERE thomasharris0147@gmail.com
 package cmd
 
 import (
+	"log"
+	"os"
+
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -12,10 +15,10 @@ import (
 	"go.uber.org/zap"
 	"harris.com/api"
 	"harris.com/config"
+	"harris.com/database"
 	"harris.com/server"
+	"harris.com/services"
 	"harris.com/utils"
-	"log"
-	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -38,7 +41,9 @@ to quickly create a Cobra application.`,
 func startServer() {
 	app := fx.New(
 		fx.Provide(
+			database.NewDatabase,
 			initFiberApp,
+			services.NewUserService,
 		),
 		fx.Invoke(
 			utils.InitLogger,

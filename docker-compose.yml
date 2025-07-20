@@ -1,0 +1,12 @@
+services:
+  backend:
+    build: .
+    volumes:
+      - .:/app
+      - ./database:/app/database
+    ports:
+      - "3000:3000"
+    environment:
+      ALLOWED_ORIGINS: http://localhost:4200
+      FRONTEND_URL: http://localhost
+      SECRET_KEY: super-secret-key

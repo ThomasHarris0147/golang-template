@@ -1,0 +1,69 @@
+run:
+  timeout: 2m
+  tests: true
+  skip-dirs:
+    - vendor
+  skip-files:
+    - ".*\\.pb\\.go"  # skip generated protobuf files
+
+linters:
+  enable:
+    - govet
+    - staticcheck
+    - errcheck
+    - gosimple
+    - ineffassign
+    - deadcode
+    - typecheck
+    - structcheck
+    - varcheck
+    - unused
+    - gocritic
+    - gofmt
+    - goimports
+    - depguard
+    - revive
+    - misspell
+
+linters-settings:
+  gofmt:
+    simplify: true
+
+  goimports:
+    local-prefixes: github.com/your-org/your-project
+
+  misspell:
+    locale: US
+
+  depguard:
+    list-type: blacklist
+    packages:
+      - github.com/pkg/errors
+    packages-with-error-message:
+      github.com/pkg/errors: "Use standard `errors` package instead"
+
+  revive:
+    ignore-generated-header: true
+    severity: warning
+    rules:
+      - name: var-naming
+        arguments:
+          allowCommonInitialisms: true
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck
+    - text: "comment on exported function .* should be of the form"
+    - linters:
+        - staticcheck
+      text: "should have package comment"
+
+output:
+  format: colored-line-number
+  sort-results: true
+
